@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # Create feature vectors
     vectorizer = TfidfVectorizer(min_df=5,
-                                 max_def=0.8,
+                                 max_df=0.8,
                                  sublinear_tf=True,
                                  use_idf=True)
     train_vectors = vectorizer.fit_transform(train_data)
@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
     # Print results in a nice table
     print("Results for SVC(kernel=rbf)")
-    print"Training time: %fs; Prediction time: %fs" % (time_rbf_train, time_rbf_predict))
+    print("Training time: %fs; Prediction time: %fs" % (time_rbf_train, time_rbf_predict))
     print(classification_report(test_labels, prediction_rbf))
     print("Results for SVC(kernel=linear)")
     print("Training time: %fs; Prediction time: %fs" % (time_linear_train, time_linear_predict))
