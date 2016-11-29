@@ -91,3 +91,4 @@ ENV/
 #Ignore big datasets
 good_corpus.txt
 bad_corpus.txt
+txt_sentoken/
