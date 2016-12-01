@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # Create feature vectors
     vectorizer = TfidfVectorizer(min_df=5,
-                                 max_def=0.8,
+                                 max_df=0.8,
                                  sublinear_tf=True,
                                  use_idf=True)
     train_vectors = vectorizer.fit_transform(train_data)
