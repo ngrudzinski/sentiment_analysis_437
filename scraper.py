@@ -20,13 +20,12 @@ api = tweepy.API(auth)
     # process just one status
     # I think a status is like a post?
 #    print(status.text)
-
+user_id = raw_input("Enter user id: ")
 f = open("scrapings.text", "w+")
-timeline = api.user_timeline(screen_name = "potus", include_rts = True, count=1)
+timeline = api.user_timeline(screen_name = user_id, include_rts = True, count=1)
 for tweet in timeline:
     text = u''.join(tweet.text)
     print(text.encode('utf-8'))
-    print(tweet._json)
     f.write(text.encode('utf-8') + "\n")
 f.close()
 
