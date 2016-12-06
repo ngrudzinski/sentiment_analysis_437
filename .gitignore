@@ -93,3 +93,5 @@ good_corpus.txt
 bad_corpus.txt
 txt_sentoken/
 twitter_data/
+.idea/vcs.xml
+scrapings.text

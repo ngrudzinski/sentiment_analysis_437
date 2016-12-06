@@ -23,5 +23,9 @@ def scrape_tweets(user_id, tweets_scraped):
         text = u''.join(tweet.text)
         print(text.encode('utf-8'))
         f.write(text.encode('utf-8') + "\n")
-        f.write(''.join(tweet._json) +"\n~~~~~~~~~~~~~~~\n")
+        #f.write(''.join(tweet._json) +"\n~~~~~~~~~~~~~~~\n")
     f.close()
+
+
+if __name__ == "__main__":
+    scrape_tweets("potus", 3)
