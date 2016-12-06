@@ -4,8 +4,10 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
 
+from scraper import scrape_tweets
 
-def main():
+
+def evaluate_user(user_id):
 
     categories = ['neg', 'pos']
 
@@ -19,6 +21,7 @@ def main():
                                                alpha=1e-2, n_iter=5, random_state=42))])
     text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
+    scrape_tweets(user_id, 3)
     f = open("scrapings.text", "r")
     neg_count = 0.0
     pos_count = 0.0
@@ -30,8 +33,7 @@ def main():
             neg_count += 1
         elif category == "pos":
             pos_count += 1
+    print("neg: ", neg_count, " pos: ", pos_count)
     print("Percent Positive: " + str(pos_count / (pos_count + neg_count)))
     print("Percent Negative: " + str(neg_count / (pos_count + neg_count)))
 
-if __name__ == "__main__":
-    main()

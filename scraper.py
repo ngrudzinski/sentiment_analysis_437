@@ -1,7 +1,6 @@
-#Credit to Marco Bonzanini
+#Credit to Marco Bonzanini CC-BY 4.0
 
 import tweepy
-import json
 from tweepy import OAuthHandler
 
 consumer_key = 'KGrJyI9GdujKcowMfrheB78dR'
@@ -9,27 +8,20 @@ consumer_secret = 'TEa81xn0OZOwebVyNccqQFkY2Qe0qPJbHixz1GZQZlJZ55jY2V'
 access_token = '3021600922-wF6n5jmtjnd6Ip16L3CguHxK4p19OblPXjvJYvF'
 access_secret = 'fVpGcfRkzJB0C0lyRUEMr7lGOhz8j1cBQ8PUyQx4FWzaK'
 
-auth = OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_secret)
+def scrape_tweets(user_id, tweets_scraped):
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_secret)
 
-api = tweepy.API(auth)
+    api = tweepy.API(auth)
 
-# the 10 is an arbitrary value
-# using too much bandwidth puts the Twitter Police on you
-#for status in tweepy.Cursor(api.home_timeline).items(10):
-    # process just one status
-    # I think a status is like a post?
-#    print(status.text)
-
-f = open("scrapings.text", "w+")
-timeline = api.user_timeline(screen_name = "potus", include_rts = True, count=1)
-for tweet in timeline:
-    text = u''.join(tweet.text)
-    print(text.encode('utf-8'))
-    print(tweet._json)
-    f.write(text.encode('utf-8') + "\n")
-f.close()
-
-#for tweet in tweepy.Cursor(timeline).items():
- #   print(tweet.text + "\n")
-  #  f.write(tweet.text + "\n")
+    # the 10 is an arbitrary value
+    # using too much bandwidth puts the Twitter Police on you
+    #for status in tweepy.Cursor(api.home_timeline).items(10):
+    f = open("scrapings.text", "w+")
+    timeline = api.user_timeline(screen_name = user_id, include_rts = True, count = tweets_scraped)
+    for tweet in timeline:
+        text = u''.join(tweet.text)
+        print(text.encode('utf-8'))
+        f.write(text.encode('utf-8') + "\n")
+        f.write(''.join(tweet._json) +"\n~~~~~~~~~~~~~~~\n")
+    f.close()
