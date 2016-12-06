@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 import numpy as np
 from sklearn.pipeline import Pipeline
+from sklearn.linear_model import SGDClassifier
 
 
 categories = ['neg', 'pos']
@@ -40,12 +41,21 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                      ('tfidf', TfidfTransformer()),
                      ('clf', MultinomialNB())])
 
-for index in range(0, len(twitter_train.data)):
-    twitter_train.data[index].strip()
+#for index in range(0, len(twitter_train.data)):
+#    twitter_train.data[index].strip()
 text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
 twitter_test = load_files('./twitter_data/twitter_data-test', categories=categories, load_content=True,
                           encoding='utf-8', decode_error='ignore', shuffle=True, random_state=42)
 docs_test = twitter_test.data
+predicted = text_clf.predict(docs_test)
+print(np.mean(predicted == twitter_test.target))
+
+text_clf = Pipeline([('vect', CountVectorizer()),
+                     ('tfidf', TfidfTransformer()),
+                     ('clf', SGDClassifier(loss='hinge', penalty='l2',
+                                           alpha=1e-3, n_iter=5, random_state=42))])
+
+test_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 predicted = text_clf.predict(docs_test)
 print(np.mean(predicted == twitter_test.target))
