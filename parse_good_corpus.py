@@ -38,9 +38,10 @@ with open("good_corpus.txt") as f:
             line_with_no_generics = person_filter.sub("", line_with_no_generics)
             line_with_no_generics = rt_filter.sub("", line_with_no_generics)
 
-            # Strips out the unicode emojis that are causing problems
-            line_with_no_emoji_in_unicode = emoji_filter.sub("", line_with_no_generics.decode('utf-8'))
-            line_with_no_generics = line_with_no_emoji_in_unicode.encode('utf-8')
+            # Do not need, and probably do not want to strip out emoji anymore
+            # Uncomment if we actually should
+#            line_with_no_emoji_in_unicode = emoji_filter.sub("", line_with_no_generics.decode('utf-8'))
+#            line_with_no_generics = line_with_no_emoji_in_unicode.encode('utf-8')
 
 
 #            if "@person" in line or "RT" in line:

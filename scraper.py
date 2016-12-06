@@ -2,6 +2,7 @@
 
 import tweepy
 from tweepy import OAuthHandler
+from tweepy import TweepError
 
 consumer_key = 'KGrJyI9GdujKcowMfrheB78dR'
 consumer_secret = 'TEa81xn0OZOwebVyNccqQFkY2Qe0qPJbHixz1GZQZlJZ55jY2V'
@@ -18,10 +19,16 @@ def scrape_tweets(user_id, tweets_scraped):
     # using too much bandwidth puts the Twitter Police on you
     #for status in tweepy.Cursor(api.home_timeline).items(10):
     f = open("scrapings.text", "w+")
-    timeline = api.user_timeline(screen_name = user_id, include_rts = True, count = tweets_scraped)
+    try:
+        timeline = api.user_timeline(screen_name = user_id, include_rts = True, count = tweets_scraped)
+    except TweepError:
+        print("Error scraping tweets.\n")
+        f.close()
+        return 1
+
     for tweet in timeline:
         text = u''.join(tweet.text)
         print(text.encode('utf-8'))
         f.write(text.encode('utf-8') + "\n")
-        f.write(''.join(tweet._json) +"\n~~~~~~~~~~~~~~~\n")
     f.close()
+    return 0

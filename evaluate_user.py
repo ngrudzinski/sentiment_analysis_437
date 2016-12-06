@@ -21,7 +21,9 @@ def evaluate_user(user_id):
                                                alpha=1e-2, n_iter=5, random_state=42))])
     text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
-    scrape_tweets(user_id, 3)
+    if scrape_tweets(user_id, 3) == 1:
+        return 1
+
     f = open("scrapings.text", "r")
     neg_count = 0.0
     pos_count = 0.0
@@ -29,6 +31,7 @@ def evaluate_user(user_id):
         line_list = [line]
         predicted = str(text_clf.predict(line_list))
         category = str(twitter_train.target_names[int(predicted[1])])
+        print(category)
         if category == "neg":
             neg_count += 1
         elif category == "pos":
@@ -36,4 +39,6 @@ def evaluate_user(user_id):
     print("neg: ", neg_count, " pos: ", pos_count)
     print("Percent Positive: " + str(pos_count / (pos_count + neg_count)))
     print("Percent Negative: " + str(neg_count / (pos_count + neg_count)))
+    print("\n")
+    return 0
 
