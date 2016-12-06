@@ -22,10 +22,13 @@ api = tweepy.API(auth)
 #    print(status.text)
 
 f = open("scrapings.text", "w+")
-timeline = api.user_timeline(screen_name = "56b3197f775b41a", include_rts = True, count=10)
+timeline = api.user_timeline(screen_name = "potus", include_rts = True, count=1)
 for tweet in timeline:
-    print(tweet.text)
-    f.write(tweet.text + "\n")
+    text = u''.join(tweet.text)
+    print(text.encode('utf-8'))
+    print(tweet._json)
+    f.write(text.encode('utf-8') + "\n")
+f.close()
 
 #for tweet in tweepy.Cursor(timeline).items():
  #   print(tweet.text + "\n")
