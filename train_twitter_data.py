@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline
 
 categories = ['neg', 'pos']
 
-twitter_train = load_files('./twitter_data/twitter_data-train', categories=categories, load_content=True, shuffle=True, random_state=42)
+twitter_train = load_files('./twitter_data/twitter_data-train', encoding='utf-8', decode_error='ignore', categories=categories, load_content=True, shuffle=True, random_state=42)
 
 #Ignoring decode errors may harm our results, but at least it works now
 count_vect = CountVectorizer(decode_error='ignore')
@@ -40,9 +40,9 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                      ('tfidf', TfidfTransformer()),
                      ('clf', MultinomialNB())])
 
-#for index in range(0, len(twitter_train.data)):
-#    twitter_train.data[index].encode('utf-8').strip()
-#text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
+for index in range(0, len(twitter_train.data)):
+    twitter_train.data[index].strip()
+text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
 twitter_test = load_files('./twitter_data/twitter_data-test', categories=categories, load_content=True,
                           encoding='utf-8', decode_error='ignore', shuffle=True, random_state=42)
