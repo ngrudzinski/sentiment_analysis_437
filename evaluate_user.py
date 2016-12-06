@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -6,8 +8,9 @@ from sklearn.linear_model import SGDClassifier
 
 from scraper import scrape_tweets
 
+from sys import stdout
 
-def evaluate_user(user_id):
+def evaluate_user(user_id, output_file):
 
     categories = ['neg', 'pos']
 
@@ -27,22 +30,30 @@ def evaluate_user(user_id):
     f = open("scrapings.text", "r")
     neg_count = 0.0
     pos_count = 0.0
+    doubleprint(user_id + "'s twitter classification:\n", output_file)
+    doubleprint("~~~~~~~~~~~~~~~~~\n", output_file)
     for line in f:
         line_list = [line]
         predicted = str(text_clf.predict(line_list))
         category = str(twitter_train.target_names[int(predicted[1])])
-        print(category)
+        doubleprint(line, output_file)
         if category == "neg":
             neg_count += 1
+            doubleprint("NEGATIVE\n\n", output_file)
         elif category == "pos":
             pos_count += 1
-    print("neg: ", neg_count, " pos: ", pos_count)
-    print("Percent Positive: " + str(pos_count / (pos_count + neg_count)))
-    print("Percent Negative: " + str(neg_count / (pos_count + neg_count)))
-    print("\n")
+            doubleprint("POSITIVE\n", output_file)
+    doubleprint("\nNegative: " + str(neg_count) + " Positive: " +  str(pos_count) + "\n", output_file)
+    doubleprint("Percent Positive: " + str(pos_count / (pos_count + neg_count)) + "\n", output_file)
+    doubleprint("~~~~~~~~~~~~~~~~~\n", output_file)
     return 0
+
+def doubleprint(text, output_file):
+    print(text)
+    if output_file is not None:
+        output_file.write(text)
 
 
 if __name__ == "__main__":
-    evaluate_user("potus")
+    evaluate_user("potus", None)
 
