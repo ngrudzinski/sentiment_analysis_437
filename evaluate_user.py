@@ -15,10 +15,10 @@ def evaluate_user(user_id):
                                categories=categories, load_content=True, shuffle=True, random_state=42)
 
     count_vect = CountVectorizer(decode_error='ignore')
-    text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
+    text_clf = Pipeline([('vect', CountVectorizer(ngram_range=(1, 2))),
                          ('tfidf', TfidfTransformer()),
                          ('clf', SGDClassifier(loss='hinge', penalty='l2',
-                                               alpha=1e-2, n_iter=5, random_state=42))])
+                                               alpha=1e-3, n_iter=5, random_state=42))])
     text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
     if scrape_tweets(user_id, 3) == 1:
@@ -41,4 +41,8 @@ def evaluate_user(user_id):
     print("Percent Negative: " + str(neg_count / (pos_count + neg_count)))
     print("\n")
     return 0
+
+
+if __name__ == "__main__":
+    evaluate_user("potus")
 

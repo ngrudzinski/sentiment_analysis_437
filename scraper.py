@@ -32,3 +32,7 @@ def scrape_tweets(user_id, tweets_scraped):
         f.write(text.encode('utf-8') + "\n")
     f.close()
     return 0
+
+
+if __name__ == "__main__":
+    scrape_tweets("potus", 3)
