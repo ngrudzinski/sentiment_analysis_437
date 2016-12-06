@@ -28,7 +28,7 @@ def scrape_tweets(user_id, tweets_scraped):
 
     for tweet in timeline:
         text = u''.join(tweet.text)
-        text = text.replace("\n","")
+        text = text.replace("\n","  ")
 
         f.write(text.encode('utf-8') + "\n")
     f.close()
