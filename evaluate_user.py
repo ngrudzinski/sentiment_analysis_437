@@ -24,7 +24,7 @@ def evaluate_user(user_id, output_file):
                                                alpha=1e-3, n_iter=5, random_state=42))])
     text_clf = text_clf.fit(twitter_train.data, twitter_train.target)
 
-    if scrape_tweets(user_id, 3) == 1:
+    if scrape_tweets(user_id, 20) == 1:
         return 1
 
     f = open("scrapings.text", "r")
